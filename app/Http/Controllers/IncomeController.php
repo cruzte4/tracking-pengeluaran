@@ -16,13 +16,13 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'kategori' => 'required|string|max:100',
-            'jumlah' => 'required|numeric|min:0',
-            'tanggal' => 'required|date',
-            'keterangan' => 'nullable|string|max:255',
+            'category' => 'required|string|max:100',
+            'amount' => 'required|numeric|min:0',
+            'date' => 'required|date',
+            'description' => 'nullable|string|max:255',
         ]);
 
-        $validated['user_id'] = Auth::id();
+        $validated['user_id'] = 1;
 
         Income::create($validated);
 
