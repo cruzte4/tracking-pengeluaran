@@ -22,7 +22,7 @@ class ExpenseController extends Controller
             'keterangan' => 'nullable|string|max:255',
         ]);
 
-        $validated['user_id'] = Auth::id();; //usernya ganti
+        $validated['user_id'] = Auth::id(); //usernya ganti
 
         Expense::create($validated);
 
