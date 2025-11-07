@@ -15,25 +15,25 @@
     @endif
 
     <form action="/expenses" method="POST">
-        @csrf
+    @csrf
         <div class="mb-3">
-            <label for="category" class="form-label">Kategori</label>
-            <input type="text" name="category" id="category" class="form-control" placeholder="Misal: Listrik, Wifi, Makan" required>
+            <label for="kategori" class="form-label">Kategori</label>
+            <input type="text" name="kategori" id="kategori" class="form-control" placeholder="Misal: Listrik, Wifi, Makan" required>
         </div>
 
         <div class="mb-3">
-            <label for="amount" class="form-label">Jumlah (Rp)</label>
-            <input type="number" name="amount" id="amount" class="form-control" placeholder="Masukkan jumlah" required>
+            <label for="jumlah" class="form-label">Jumlah (Rp)</label>
+            <input type="number" name="jumlah" id="jumlah" class="form-control" placeholder="Masukkan jumlah" required>
         </div>
 
         <div class="mb-3">
-            <label for="date" class="form-label">Tanggal</label>
-            <input type="date" name="date" id="date" class="form-control" required>
+            <label for="tanggal" class="form-label">Tanggal</label>
+            <input type="date" name="tanggal" id="tanggal" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label for="description" class="form-label">Keterangan (Opsional)</label>
-            <textarea name="description" id="description" class="form-control" rows="2" placeholder="Keterangan tambahan..."></textarea>
+            <label for="keterangan" class="form-label">Keterangan (Opsional)</label>
+            <textarea name="keterangan" id="keterangan" class="form-control" rows="2" placeholder="Keterangan tambahan..."></textarea>
         </div>
 
         <button type="submit" class="btn btn-success">Simpan</button>
