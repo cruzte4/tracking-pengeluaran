@@ -22,7 +22,7 @@ class IncomeController extends Controller
             'keterangan' => 'nullable|string|max:255',
         ]);
 
-        $validated['user_id'] = 1; //usernya ganti
+        $validated['user_id'] = Auth::id(); //usernya ganti
 
         Income::create($validated);
 
