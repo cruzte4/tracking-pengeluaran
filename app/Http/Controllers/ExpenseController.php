@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
-use App\Models\Expense; // ✅ tambahkan baris ini
+use App\Models\Expense;
 use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
@@ -16,23 +17,52 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-<<<<<<< HEAD
             'kategori' => 'required|string|max:100',
             'jumlah' => 'required|numeric|min:0',
             'tanggal' => 'required|date',
             'keterangan' => 'nullable|string|max:255',
-=======
-            'category' => 'required|string|max:100',
-            'amount' => 'required|numeric|min:0',
-            'date' => 'required|date',
-            'description' => 'nullable|string|max:255',
->>>>>>> 4bffe41d2c61f2f5fd8619611913b60c3a231bf8
         ]);
 
-        $validated['user_id'] = 1; //usernya ganti
+        $validated['user_id'] = Auth::id();
 
         Expense::create($validated);
 
-        return redirect('/')->with('success', 'Pemasukan berhasil ditambahkan!');
+        return redirect()->route('transactions.index')->with('success', 'Pengeluaran berhasil ditambahkan!');
+    }
+
+    public function edit(Expense $expense)
+    {
+        if ($expense->user_id != Auth::id()) {
+            abort(403);
+        }
+        return view('expenses.edit', compact('expense'));
+    }
+
+    public function update(Request $request, Expense $expense)
+    {
+        if ($expense->user_id != Auth::id()) {
+            abort(403);
+        }
+
+        $validated = $request->validate([
+            'kategori' => 'required|string|max:100',
+            'jumlah' => 'required|numeric|min:0',
+            'tanggal' => 'required|date',
+            'keterangan' => 'nullable|string|max:255',
+        ]);
+
+        $expense->update($validated);
+
+        return redirect()->route('transactions.index')->with('success', 'Pengeluaran berhasil diperbarui!');
+    }
+
+    public function destroy(Expense $expense)
+    {
+        if ($expense->user_id != Auth::id()) {
+            abort(403);
+        }
+
+        $expense->delete();
+        return redirect()->route('transactions.index')->with('success', 'Pengeluaran berhasil dihapus!');
     }
 }
