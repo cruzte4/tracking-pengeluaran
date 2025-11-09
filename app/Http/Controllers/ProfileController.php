@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Barryvdh\DomPDF\Facade\Pdf; // <- import facade PDF dengan benar
+use App\Models\Income;
+use App\Models\Expense;
 
 class ProfileController extends Controller
 {
@@ -56,7 +58,7 @@ class ProfileController extends Controller
     }
 
     // Export data ke CSV
-   public function exportCsv()
+    public function exportCsv()
     {
         $user = Auth::user();
         $transactions = $user->transactions ?? collect(); // ✅ aman dari null
@@ -67,22 +69,24 @@ class ProfileController extends Controller
 
         foreach ($transactions as $trx) {
             fputcsv($handle, [
-                $trx->date ?? '-',
+                 $trx->date ?? '-',
                 $trx->category ?? '-',
                 $trx->amount ?? '0',
                 $trx->type ?? '-',
             ]);
         }
-    fclose($handle);
-    return response()->download($filename)->deleteFileAfterSend(true);
-    }   
+
+        fclose($handle);
+        return response()->download($filename)->deleteFileAfterSend(true);
+    }
 
     // Export profil ke PDF
     public function exportPdf()
     {
         $user = Auth::user();
         $pdf = Pdf::loadView('profile.profile_pdf', compact('user'));
+        
         return $pdf->download('profil_pengguna.pdf');
+        
     }
-
 }
