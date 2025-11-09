@@ -1,0 +1,56 @@
+name: PHPUnit Test - Dashboard Branch
+
+on:
+  push:
+    branches: [dashboard/ihsanmaulana]
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: mbstring, intl, bcmath, pdo_mysql
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Setup database
+        run: |
+          sudo systemctl start mysql
+          mysql -e 'CREATE DATABASE testing;'
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+
+      - name: Update .env for testing
+        run: |
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_DATABASE=testing" >> .env
+          echo "DB_USERNAME=root" >> .env
+          echo "DB_PASSWORD=" >> .env
+
+      - name: Run migrations
+        run: php artisan migrate --env=testing --force
+
+      - name: Run PHPUnit
+        id: phpunit
+        run: vendor/bin/phpunit --testdox
+
+      - name: Revert push if tests fail
+        if: failure()
+        run: |
+          echo "Test failed. Reverting last commit..."
+          git reset --hard HEAD~1
+          git push origin +HEAD
