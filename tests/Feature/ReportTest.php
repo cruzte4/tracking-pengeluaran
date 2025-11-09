@@ -23,24 +23,28 @@ class ReportTest extends TestCase
             'user_id' => $user->id,
             'jumlah'  => 100000,
             'tanggal' => now(),
+            'kategori' => 'Salary',
         ]);
 
         Income::factory()->create([
             'user_id' => $user->id,
             'jumlah'  => 50000,
             'tanggal' => now(),
+            'kategori' => 'Freelance',
         ]);
 
         Expense::factory()->create([
             'user_id' => $user->id,
             'jumlah'  => 30000,
             'tanggal' => now(),
+            'kategori' => 'Food',
         ]);
 
         Expense::factory()->create([
             'user_id' => $user->id,
             'jumlah'  => 20000,
             'tanggal' => now(),
+            'kategori' => 'Transport',
         ]);
 
         // Act: login user dan akses halaman laporan
