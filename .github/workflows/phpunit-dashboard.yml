@@ -1,8 +1,8 @@
-name: PHPUnit Test - Auth Pages
+name: PHPUnit Test - Dashboard Branch
 
 on:
   push:
-    branches: [authpages/muhammadrizki]
+    branches: [dashboard/ihsanmaulana]
 
 permissions:
   contents: read
