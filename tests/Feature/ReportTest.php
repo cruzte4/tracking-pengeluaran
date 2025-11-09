@@ -43,7 +43,7 @@ class ReportTest extends TestCase
             'user_id' => $user->id,
             'jumlah'  => 20000,
             'tanggal' => now(),
-            'kategori' => 'Transport',
+            'kategori' => 'Laundry',
         ]);
 
         $response = $this->get('/reports'); 
