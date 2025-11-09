@@ -41,7 +41,7 @@ class DashboardControllerTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertViewHas('balance', 500000);
+        $response->assertViewHas('balance', 50000);
         $response->assertViewHas('totalIncome', 100000);
         $response->assertViewHas('totalExpense', 50000);
         $response->assertViewHas('chartData');
