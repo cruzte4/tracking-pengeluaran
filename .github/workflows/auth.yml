@@ -1,4 +1,4 @@
-name: PHPUnit Test - Auth Pages
+name: PHPUnit Test - Auth Pages 
 
 on:
   push:
