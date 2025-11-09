@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class Profiletest extends TestCase
+class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
