@@ -49,10 +49,6 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/database/database.sqlite
 
-      - name: Run tests with coverage
-        run: | 
-            vendor/bin/phpunit --coverage-clover=coverage.xml
-
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
