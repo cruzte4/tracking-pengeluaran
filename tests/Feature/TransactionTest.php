@@ -7,6 +7,7 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Income;
 use App\Models\Expense;
+use Carbon\Carbon;
 
 class TransactionTest extends TestCase
 {
@@ -20,10 +21,11 @@ class TransactionTest extends TestCase
         Expense::factory()->create([
             'user_id' => $userB->id,
             'kategori' => 'Belanja Rahasia User B',
+            'jumlah' => 10000,
+            'tanggal' => Carbon::now(),
         ]);
 
         $response = $this->actingAs($userA)->get(route('transactions.index'));
-
         $response->assertStatus(200);
         $response->assertDontSee('Belanja Rahasia User B');
     }
@@ -32,10 +34,12 @@ class TransactionTest extends TestCase
     {
         $userA = User::factory()->create();
         $userB = User::factory()->create();
-        
+
         $expenseB = Expense::factory()->create([
             'user_id' => $userB->id,
             'kategori' => 'Kategori Lama',
+            'jumlah' => 50000,
+            'tanggal' => Carbon::now(),
         ]);
 
         $response = $this->actingAs($userA)->put(route('expenses.update', $expenseB->id), [
@@ -51,7 +55,13 @@ class TransactionTest extends TestCase
     {
         $userA = User::factory()->create();
         $userB = User::factory()->create();
-        $incomeB = Income::factory()->create(['user_id' => $userB->id]);
+
+        $incomeB = Income::factory()->create([
+            'user_id' => $userB->id,
+            'kategori' => 'Gaji Rahasia',
+            'jumlah' => 900000,
+            'tanggal' => Carbon::now(),
+        ]);
 
         $response = $this->actingAs($userA)->delete(route('incomes.destroy', $incomeB->id));
 
